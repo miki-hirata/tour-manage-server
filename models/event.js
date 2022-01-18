@@ -21,31 +21,7 @@ module.exports = (sequelize, DataTypes) => {
     Event.belongsTo(models.Place);
     Event.belongsTo(models.Tour);
     Event.belongsTo(models.EventCat);
+    Event.hasMany(models.EventSche);
   }; 
   return Event;
-};/* 
-
-const {
-  Model
-} = require('sequelize');
-module.exports = (sequelize, DataTypes) => {
-  class Event extends Model {
-    static associate(models) {
-      // define association here
-    }
-  }
-  Event.init({
-    name: DataTypes.STRING,
-    PlaceId: DataTypes.INTEGER,
-    TourId: DataTypes.INTEGER,
-    EventCatId: DataTypes.INTEGER,
-    date: DataTypes.DATE,
-    memo: DataTypes.STRING,
-    removed: DataTypes.BOOLEAN,
-    favorite: DataTypes.BOOLEAN
-  }, {
-    sequelize,
-    modelName: 'Event',
-  });
-  return Event;
-}; */
+};

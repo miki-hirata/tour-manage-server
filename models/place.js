@@ -15,43 +15,14 @@ module.exports = (sequelize, DataTypes) => {
     city: DataTypes.STRING,
     street: DataTypes.STRING,
     tel: DataTypes.STRING,
-    fax: DataTypes.STRING
+    fax: DataTypes.STRING,
+    PlaceCatId: DataTypes.INTEGER
   }, {});
   
   Place.associate = function(models){
     Place.hasMany(models.Event);
+    Place.hasMany(models.PlaceMemo);
+    Place.belongsTo(models.PlaceCat);
   }; 
   return Place;
 };
-
-/* const {
-  Model
-} = require('sequelize');
-module.exports = (sequelize, DataTypes) => {
-  class Place extends Model {
-    static associate(models) {
-      // define association here
-    }
-  }
-  Place.init({
-    name: DataTypes.STRING,
-    memo: DataTypes.STRING,
-    removed: DataTypes.BOOLEAN,
-    favorite: DataTypes.BOOLEAN,
-    country: DataTypes.STRING,
-    postalCode: DataTypes.STRING,
-    prefecture: DataTypes.STRING,
-    city: DataTypes.STRING,
-    street: DataTypes.STRING,
-    tel: DataTypes.STRING,
-    fax: DataTypes.STRING
-  }, {
-    sequelize,
-    modelName: 'Place',
-  });
-  
-  Place.associate = function(models){
-    Place.hasMany(models.Event);
-  }; 
-  return Place;
-}; */

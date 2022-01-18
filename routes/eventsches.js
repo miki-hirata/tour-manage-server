@@ -3,86 +3,87 @@ var router = express.Router();
 var { Op } = require('sequelize')
 const db = require('../models/index');
 
-
-const modelColums = Object.keys(db.User.rawAttributes);//指定モデルのカラム名一覧取得
-const removals = ['id', 'createdAt','updatedAt'];//除外したいカラム名
-const targetColums = modelColums.filter(x => {return ! removals.includes(x)});
-const syncColums = targetColums.map(x => {return (x + ': req.body.'+x)});
-//console.log(syncColums);
-
 router.get('/', function(req, res, next) {
   if(!req.query.id){//クエリのID指定が無い時は全件表示
-    db.User.findAll(
+    db.EventSche.findAll(
       {
         order: [
           ['id', 'ASC']
         ]
       }
-    ).then(pls => {
-      res.json(pls);
+    ).then(eves => {
+      res.json(eves);
     });
   } else {
-    db.User.findByPk(
-      req.query.id
-    ).then(pl => {
-      res.json(pl);
+    db.EventSche.findByPk(
+      req.query.id,
+      {
+        include: [
+          {model: db.Event}
+        ]
+      }
+    ).then(eve => {
+      res.json(eve);
     });
   }
 });
 
 router.post('/add', function(req, res, next) {
   db.sequelize.sync()
-  .then(() => db.User.create({
+  .then(() => db.EventSche.create({
     name: req.body.name,
-    password: req.body.memo,
-    removed: false,
+    EventId: req.body.EventId,
+    time: req.body.time,
+    memo: req.body.memo
   }))
   .then(() => {
-    res.redirect('/users');
+    res.redirect('/eventsches');
   })
   .catch(() => {
-    res.redirect('/users');
+    res.redirect('/eventsches');
     console.log('新規作成失敗');
   });
 });
 
 router.get('/edit', function(req, res, next) {
-  db.User.findByPk(
+  db.EventSche.findByPk(
     req.query.id
-  ).then(pl => {
-    res.render('userUpdate', {user: pl});
+  ).then(eve => {
+    res.render('eventscheUpdate', {eventsche: eve});
   });
 });
 
 router.post('/edit', function(req, res, next) {
   db.sequelize.sync()
-  .then(() => db.User.update({
-    name: req.body.name,
-    password: req.body.memo,
-    removed: req.body.removed,
-  },
+  .then(() => db.EventSche.update(
+    {
+      name: req.body.name,
+      EventId: req.body.EventId,
+      time: req.body.time,
+      memo: req.body.memo
+    },
   {
     where: {id: req.body.id}
   }))
   .then(() => {
-    res.redirect('/users');
+    res.redirect('/eventsches');
   })
   .catch(() => {
-    res.redirect('/users');
+    res.redirect('/eventsches');
     console.log('更新失敗');
   });
 });
 
 router.post('/delete', function(req, res, next) {
   db.sequelize.sync()
-  .then(() => db.User.destroy({
+  .then(() => db.EventSche.destroy({
     where: {id: req.body.id}
   }))
   .then(() => {
-    res.redirect('/users');
+    res.redirect('/eventsches');
   })
   .catch(() => {
-    res.redirect('/users');
+    res.redirect('/eventsches');
     console.log('削除失敗');
   });
 });

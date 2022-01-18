@@ -3,16 +3,9 @@ var router = express.Router();
 var { Op } = require('sequelize')
 const db = require('../models/index');
 
-
-const modelColums = Object.keys(db.User.rawAttributes);//指定モデルのカラム名一覧取得
-const removals = ['id', 'createdAt','updatedAt'];//除外したいカラム名
-const targetColums = modelColums.filter(x => {return ! removals.includes(x)});
-const syncColums = targetColums.map(x => {return (x + ': req.body.'+x)});
-//console.log(syncColums);
-
 router.get('/', function(req, res, next) {
   if(!req.query.id){//クエリのID指定が無い時は全件表示
-    db.User.findAll(
+    db.Tour.findAll(
       {
         order: [
           ['id', 'ASC']
@@ -22,8 +15,13 @@ router.get('/', function(req, res, next) {
       res.json(pls);
     });
   } else {
-    db.User.findByPk(
-      req.query.id
+    db.Tour.findByPk(
+      req.query.id,
+      {
+        include: [{
+         model: db.Event
+        }]
+      }
     ).then(pl => {
       res.json(pl);
     });
@@ -32,57 +30,67 @@ router.get('/', function(req, res, next) {
 
 router.post('/add', function(req, res, next) {
   db.sequelize.sync()
-  .then(() => db.User.create({
+  .then(() => db.Tour.create({
     name: req.body.name,
-    password: req.body.memo,
+    date: req.body.date,
+    EventId: req.body.EventId,
+    iconColor: req.body.iconColor,
+    memo: req.body.memo,
     removed: false,
+    favorite: false,
+    done: false
   }))
   .then(() => {
-    res.redirect('/users');
+    res.redirect('/tours');
   })
   .catch(() => {
-    res.redirect('/users');
+    res.redirect('/tours');
     console.log('新規作成失敗');
   });
 });
 
 router.get('/edit', function(req, res, next) {
-  db.User.findByPk(
+  db.Tour.findByPk(
     req.query.id
   ).then(pl => {
-    res.render('userUpdate', {user: pl});
+    res.render('tourUpdate', {tour: pl});
   });
 });
 
 router.post('/edit', function(req, res, next) {
   db.sequelize.sync()
-  .then(() => db.User.update({
+  .then(() => db.Tour.update({
     name: req.body.name,
-    password: req.body.memo,
+    date: req.body.date,
+    EventId: req.body.EventId,
+    iconColor: req.body.iconColor,
+    memo: req.body.memo,
     removed: req.body.removed,
+    favorite: req.body.favorite,
+    done: req.body.done
   },
   {
     where: {id: req.body.id}
   }))
   .then(() => {
-    res.redirect('/users');
+    res.redirect('/tours');
   })
   .catch(() => {
-    res.redirect('/users');
+    res.redirect('/tours');
     console.log('更新失敗');
   });
 });
 
 router.post('/delete', function(req, res, next) {
   db.sequelize.sync()
-  .then(() => db.User.destroy({
+  .then(() => db.Tour.destroy({
     where: {id: req.body.id}
   }))
   .then(() => {
-    res.redirect('/users');
+    res.redirect('/tours');
   })
   .catch(() => {
-    res.redirect('/users');
+    res.redirect('/tours');
     console.log('削除失敗');
   });
 });

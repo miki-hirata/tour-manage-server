@@ -1,13 +1,14 @@
 'use strict';
+
 module.exports = (sequelize, DataTypes) => {
-  const EventCat = sequelize.define('EventCat' ,{
+  const PlaceCat = sequelize.define('PlaceCat' ,{
     name: {
       type: DataTypes.STRING,
       validate: {notEmpty: true}
     }
   }, {});
-  EventCat.associate = function(models){
-    EventCat.hasMany(models.Event);
+  PlaceCat.associate = function(models){
+    PlaceCat.hasMany(models.Place);
   }; 
-  return EventCat;
+  return PlaceCat;
 };

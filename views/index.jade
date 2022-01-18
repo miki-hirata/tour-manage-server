@@ -3,3 +3,97 @@ extends layout
 block content
   h1= title
   p Welcome to #{title}
+  
+  h2 ツアー
+  h3 新規作成
+  form(action="/tours/add" method="post") 
+    label(for="name") ツアー名 
+    input(type="text" name="name")
+    label(for="iconColor") アイコン色（番号）
+    input(type="number" name="iconColor")
+    label(for="memo") メモ 
+    input(type="text" name="memo")
+    input(type="submit" value="新規作成")
+    
+  h2 会場
+  h3 新規作成
+  form(action="/places/add" method="post") 
+    label(for="name") 会館名 
+    input(type="text" name="name")
+    label(for="memo") メモ 
+    input(type="text" name="memo")
+    input(type="submit" value="新規作成")
+  h3 削除
+  form(action="/places/delete" method="post") 
+    label(for="name") 削除する会館のID 
+    input(type="text" name="id")
+    input(type="submit" value="削除")
+
+  h2 会場カテゴリ
+  h3 新規作成
+  form(action="/placecats/add" method="post") 
+    label(for="name") カテゴリ名 
+    input(type="text" name="name")
+    input(type="submit" value="新規作成")
+
+  h2 会場メモ
+  h3 新規作成
+  form(action="/placememos/add" method="post") 
+    label(for="PlaceId") 会館ID 
+    input(type="number" name="PlaceId")
+    label(for="UserId") ユーザID 
+    input(type="number" name="UserId")
+    label(for="memo") メモ
+    input(type="text" name="memo")
+    input(type="submit" value="新規作成")
+
+  h2 イベント
+  h3 新規作成
+  form(action="/events/add" method="post") 
+    label(for="name") イベント名 
+    input(type="text" name="name")
+    label(for="TourId") ツアーID 
+    input(type="number" name="TourId")
+    label(for="PlaceId") 会館ID 
+    input(type="number" name="PlaceId")
+    label(for="EventCatId") イベントカテゴリID 
+    input(type="number" name="EventCatId")
+    label(for="date") 日付 
+    input(type="date" name="date")
+    label(for="memo") メモ 
+    input(type="text" name="memo")
+    input(type="submit" value="新規作成")
+  h3 削除
+  form(action="/events/delete" method="post") 
+    label(for="number") 削除するイベントのID 
+    input(type="text" name="id")
+    input(type="submit" value="削除")
+
+  h2 イベントカテゴリ
+  h3 新規作成
+  form(action="/eventcats/add" method="post") 
+    label(for="name") カテゴリ名 
+    input(type="text" name="name")
+    input(type="submit" value="新規作成")
+    
+  h2 イベントスケジュール
+  h3 新規作成
+  form(action="/eventsches/add" method="post") 
+    label(for="EventId") イベントID
+    input(type="number" name="EventId")
+    label(for="name") スケジュール名 
+    input(type="text" name="name")
+    label(for="time") 時間 
+    input(type="time" name="time")
+    label(for="memo") メモ 
+    input(type="text" name="memo")
+    input(type="submit" value="新規作成")
+
+  h2 ユーザー
+  h3 新規作成
+  form(action="/users/add" method="post") 
+    label(for="name") 名前
+    input(type="text" name="name")
+    label(for="password") パスワード
+    input(type="text" name="password")
+    input(type="submit" value="新規作成")
