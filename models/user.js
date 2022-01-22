@@ -8,7 +8,11 @@ module.exports = (sequelize, DataTypes) => {
     },
     password: {
       type: DataTypes.STRING,
-      validate: {notEmpty: true}
+      validate: {
+        notEmpty: true,
+        isAlphanumeric: true,
+        min: 6
+      }
     },
     removed: DataTypes.BOOLEAN
   }, {});

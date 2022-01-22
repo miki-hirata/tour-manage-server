@@ -18,23 +18,24 @@ router.get('/', function(req, res, next) {
           ['id', 'ASC']
         ]
       }
-    ).then(pls => {
-      res.json(pls);
+    ).then(uss => {
+      res.json(uss);
     });
   } else {
     db.User.findByPk(
       req.query.id
-    ).then(pl => {
-      res.json(pl);
+    ).then(us => {
+      res.json(us);
     });
   }
 });
 
 router.post('/add', function(req, res, next) {
+  
   db.sequelize.sync()
   .then(() => db.User.create({
     name: req.body.name,
-    password: req.body.memo,
+    password: req.body.password,
     removed: false,
   }))
   .then(() => {
@@ -49,8 +50,8 @@ router.post('/add', function(req, res, next) {
 router.get('/edit', function(req, res, next) {
   db.User.findByPk(
     req.query.id
-  ).then(pl => {
-    res.render('userUpdate', {user: pl});
+  ).then(us => {
+    res.render('userUpdate', {user: us});
   });
 });
 
@@ -58,7 +59,7 @@ router.post('/edit', function(req, res, next) {
   db.sequelize.sync()
   .then(() => db.User.update({
     name: req.body.name,
-    password: req.body.memo,
+    password: req.body.password,
     removed: req.body.removed,
   },
   {

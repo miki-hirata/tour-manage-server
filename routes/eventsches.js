@@ -11,8 +11,8 @@ router.get('/', function(req, res, next) {
           ['id', 'ASC']
         ]
       }
-    ).then(eves => {
-      res.json(eves);
+    ).then(sches => {
+      res.json(sches);
     });
   } else {
     db.EventSche.findByPk(
@@ -22,8 +22,8 @@ router.get('/', function(req, res, next) {
           {model: db.Event}
         ]
       }
-    ).then(eve => {
-      res.json(eve);
+    ).then(sche => {
+      res.json(sche);
     });
   }
 });
@@ -48,8 +48,8 @@ router.post('/add', function(req, res, next) {
 router.get('/edit', function(req, res, next) {
   db.EventSche.findByPk(
     req.query.id
-  ).then(eve => {
-    res.render('eventscheUpdate', {eventsche: eve});
+  ).then(sche => {
+    res.render('eventscheUpdate', {eventsche: sche});
   });
 });
 

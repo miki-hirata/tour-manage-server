@@ -8,6 +8,7 @@ const modelColums = Object.keys(db.Event.rawAttributes);//指定モデルのカ�
 const removals = ['id', 'createdAt','updatedAt'];//除外したいカラム名
 const targetColums = modelColums.filter(x => {return ! removals.includes(x)});
 const syncColums = targetColums.map(x => {return (x + ': req.body.'+x)});
+//console.log(syncColums);
 
 router.get('/', function(req, res, next) {
   if(!req.query.id){//クエリのID指定が無い時は全件表示

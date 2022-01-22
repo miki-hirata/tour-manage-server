@@ -3,11 +3,17 @@ module.exports = (sequelize, DataTypes) => {
   const PlaceMemo = sequelize.define('PlaceMemo' ,{
     PlaceId: {
       type: DataTypes.INTEGER,
-      validate: {notEmpty: true}
+      validate: {
+        notEmpty: true,
+        isInt: true
+      }
     },
     UserId: {
       type: DataTypes.INTEGER,
-      validate: {notEmpty: true}
+      validate: {
+        notEmpty: true,
+        isInt: true
+      }
     },
     memo: {
       type: DataTypes.STRING,

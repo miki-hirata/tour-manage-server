@@ -11,22 +11,32 @@ router.get('/', function(req, res, next) {
           ['id', 'ASC']
         ]
       }
-    ).then(pls => {
-      res.json(pls);
+    ).then(tos => {
+      res.json(tos);
     });
   } else {
     db.Tour.findByPk(
-      req.query.id,
-      {
-        include: [{
-         model: db.Event
-        }]
-      }
-    ).then(pl => {
-      res.json(pl);
+      req.query.id
+    ).then(to => {
+      res.json(to);
     });
   }
 });
+
+
+router.get('/events', function(req, res, next) {
+  db.Event.findAll(
+    {
+      where: {TourId: req.query.id},
+      order: [
+        ['date', 'ASC']
+      ]
+    }
+  ).then(eves => {
+    res.json(eves);
+  });
+});
+
 
 router.post('/add', function(req, res, next) {
   db.sequelize.sync()
@@ -52,8 +62,8 @@ router.post('/add', function(req, res, next) {
 router.get('/edit', function(req, res, next) {
   db.Tour.findByPk(
     req.query.id
-  ).then(pl => {
-    res.render('tourUpdate', {tour: pl});
+  ).then(to => {
+    res.render('tourUpdate', {tour: to});
   });
 });
 

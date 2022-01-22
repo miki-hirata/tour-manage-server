@@ -7,7 +7,10 @@ module.exports = (sequelize, DataTypes) => {
     },
     EventId: {
       type: DataTypes.INTEGER,
-      validate: {notEmpty: true}
+      validate: {
+        notEmpty: true,
+        isInt: true
+      }
     },
     time: DataTypes.TIME,
     memo: DataTypes.STRING,

@@ -13,7 +13,10 @@ if (config.use_env_variable) {
   sequelize = new Sequelize(process.env[config.use_env_variable], config);
 } else {
   sequelize = new Sequelize(config.database, config.username, config.password, config);
-} */
+} 
+以下への書き換えでもミグレーション・シーディング可能なこと確認済み
+*/
+
 const url =
   process.env.DATABASE_URL ||
   "postgres://postgres:postgres@localhost:5432/tour_manage01";

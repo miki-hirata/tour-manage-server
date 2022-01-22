@@ -26,17 +26,42 @@ router.get('/', function(req, res, next) {
     });
   } else {
     db.Place.findByPk(
-      req.query.id,
-      {
-        include: [{
-         model: db.Event
-        }]
-      }
+      req.query.id
     ).then(pl => {
       res.json(pl);
     });
   }
 });
+
+
+router.get('/events', function(req, res, next) {
+  db.Event.findAll(
+    {
+      where: {PlaceId: req.query.id},
+      order: [
+        ['date', 'DESC']
+      ]
+    }
+  ).then(eves => {
+    res.json(eves);
+  });
+});
+
+
+
+router.get('/memos', function(req, res, next) {
+  db.PlaceMemo.findAll(
+    {
+      where: {PlaceId: req.query.id},
+      order: [
+        ['createdAt', 'DESC']
+      ]
+    }
+  ).then(mems => {
+    res.json(mems);
+  });
+});
+
 
 router.post('/add', function(req, res, next) {
   db.sequelize.sync()

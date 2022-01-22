@@ -8,11 +8,32 @@ module.exports = (sequelize, DataTypes) => {
     },
     date: {
       type: DataTypes.DATE,
-      validate: {notEmpty: true}
+      validate: {
+        notEmpty: true,
+        isDate: true
+      }
     },
-    PlaceId: DataTypes.INTEGER,
-    TourId: DataTypes.INTEGER,
-    EventCatId: DataTypes.INTEGER,
+    PlaceId: {
+      type: DataTypes.INTEGER,
+      validate: {
+        notEmpty: true,
+        isInt: true
+      }
+    },
+    TourId: {
+      type: DataTypes.INTEGER,
+      validate: {
+        notEmpty: true,
+        isInt: true
+      }
+    },
+    EventCatId: {
+      type: DataTypes.INTEGER,
+      validate: {
+        notEmpty: true,
+        isInt: true
+      }
+    },
     memo: DataTypes.STRING,
     removed: DataTypes.BOOLEAN,
     favorite: DataTypes.BOOLEAN

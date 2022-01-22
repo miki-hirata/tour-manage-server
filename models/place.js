@@ -6,6 +6,13 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.STRING,
       validate: {notEmpty: true}
     },
+    PlaceCatId: {
+      type: DataTypes.INTEGER,
+      validate: {
+        notEmpty: true,
+        isInt: true
+      }
+    },
     memo: DataTypes.STRING,
     removed: DataTypes.BOOLEAN,
     favorite: DataTypes.BOOLEAN,
@@ -16,7 +23,6 @@ module.exports = (sequelize, DataTypes) => {
     street: DataTypes.STRING,
     tel: DataTypes.STRING,
     fax: DataTypes.STRING,
-    PlaceCatId: DataTypes.INTEGER
   }, {});
   
   Place.associate = function(models){

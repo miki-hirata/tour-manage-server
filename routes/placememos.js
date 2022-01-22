@@ -11,8 +11,8 @@ router.get('/', function(req, res, next) {
           ['id', 'ASC']
         ]
       }
-    ).then(eves => {
-      res.json(eves);
+    ).then(mems => {
+      res.json(mems);
     });
   } else {
     db.PlaceMemo.findByPk(
@@ -23,8 +23,8 @@ router.get('/', function(req, res, next) {
           {model: db.User}
         ]
       }
-    ).then(eve => {
-      res.json(eve);
+    ).then(mem => {
+      res.json(mem);
     });
   }
 });
@@ -49,8 +49,8 @@ router.post('/add', function(req, res, next) {
 router.get('/edit', function(req, res, next) {
   db.PlaceMemo.findByPk(
     req.query.id
-  ).then(eve => {
-    res.render('placememoUpdate', {placememo: eve});
+  ).then(mem => {
+    res.render('placememoUpdate', {placememo: mem});
   });
 });
 

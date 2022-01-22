@@ -11,8 +11,8 @@ router.get('/', function(req, res, next) {
           ['id', 'ASC']
         ]
       }
-    ).then(eves => {
-      res.json(eves);
+    ).then(plcs => {
+      res.json(plcs);
     });
   } else {
     db.PlaceCat.findByPk(
@@ -22,8 +22,8 @@ router.get('/', function(req, res, next) {
           {model: db.Place}
         ]
       }
-    ).then(eve => {
-      res.json(eve);
+    ).then(plc => {
+      res.json(plc);
     });
   }
 });
@@ -45,8 +45,8 @@ router.post('/add', function(req, res, next) {
 router.get('/edit', function(req, res, next) {
   db.PlaceCat.findByPk(
     req.query.id
-  ).then(eve => {
-    res.render('placecatUpdate', {placecat: eve});
+  ).then(plc => {
+    res.render('placecatUpdate', {placecat: plc});
   });
 });
 
