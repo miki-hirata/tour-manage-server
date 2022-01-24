@@ -38,6 +38,20 @@ router.get('/', function(req, res, next) {
   }
 });
 
+router.get('/sches', function(req, res, next) {
+  db.EventSche.findAll(
+    {
+      where: {EventId: req.query.id},
+      order: [
+        ['time', 'ASC']
+      ]
+    }
+  ).then(sches => {
+    res.json(sches);
+  });
+});
+
+
 router.post('/add', function(req, res, next) {
   db.sequelize.sync()
   .then(() => db.Event.create({

@@ -26,7 +26,12 @@ router.get('/', function(req, res, next) {
     });
   } else {
     db.Place.findByPk(
-      req.query.id
+      req.query.id,
+      {
+        include: [
+          {model: db.Event}, {model: db.PlaceCat}, {model: db.PlaceMemo}
+        ]
+      }
     ).then(pl => {
       res.json(pl);
     });
@@ -55,6 +60,9 @@ router.get('/memos', function(req, res, next) {
       where: {PlaceId: req.query.id},
       order: [
         ['createdAt', 'DESC']
+      ],
+      include: [
+        {model: db.User}
       ]
     }
   ).then(mems => {

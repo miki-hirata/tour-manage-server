@@ -30,6 +30,9 @@ router.get('/events', function(req, res, next) {
       where: {TourId: req.query.id},
       order: [
         ['date', 'ASC']
+      ],
+      include: [
+        {model: db.Place},{model: db.EventCat}, {model: db.EventSche}
       ]
     }
   ).then(eves => {
