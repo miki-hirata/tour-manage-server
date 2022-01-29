@@ -16,7 +16,12 @@ router.get('/', function(req, res, next) {
     });
   } else {
     db.Tour.findByPk(
-      req.query.id
+      req.query.id/* ,
+      {
+        include: [
+          {model: db.EventCat}
+        ]
+      } */
     ).then(to => {
       res.json(to);
     });
