@@ -5,7 +5,7 @@ const db = require('../models/index');
 /* GET home page. */
 router.get('/', function(req, res, next) {
 
-res.render('index', { title: 'Express' });
+res.render('index', { title: 'Tour m.' });
   /* db.Event.findAll(
     {
       order: [
