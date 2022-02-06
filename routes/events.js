@@ -14,6 +14,7 @@ router.get('/', function(req, res, next) {
   if(!req.query.id){//クエリのID指定が無い時は全件表示
     db.Event.findAll(
       {
+        where: {removed: false},
         order: [
           ['date', 'ASC']
         ],
@@ -36,6 +37,23 @@ router.get('/', function(req, res, next) {
       res.json(eve);
     });
   }
+});
+
+
+router.get('/bin', function(req, res, next) {
+  db.Event.findAll(
+    {
+      where: {removed: true},
+      order: [
+        ['date', 'ASC']
+      ],
+      include: [
+        {model: db.Place}, {model: db.Tour}, {model: db.EventCat}, {model: db.EventSche}
+      ]
+    }
+  ).then(eves => {
+    res.json(eves);
+  });
 });
 
 router.get('/sches', function(req, res, next) {

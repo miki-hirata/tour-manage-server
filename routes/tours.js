@@ -7,6 +7,7 @@ router.get('/', function(req, res, next) {
   if(!req.query.id){//クエリのID指定が無い時は全件表示
     db.Tour.findAll(
       {
+        where: {removed: false},
         order: [
           ['id', 'ASC']
         ]
@@ -16,16 +17,24 @@ router.get('/', function(req, res, next) {
     });
   } else {
     db.Tour.findByPk(
-      req.query.id/* ,
-      {
-        include: [
-          {model: db.EventCat}
-        ]
-      } */
+      req.query.id
     ).then(to => {
       res.json(to);
     });
   }
+});
+
+router.get('/bin', function(req, res, next) {
+  db.Tour.findAll(
+    {
+      where: {removed: true},
+      order: [
+        ['id', 'ASC']
+      ]
+    }
+  ).then(tos => {
+    res.json(tos);
+  });
 });
 
 

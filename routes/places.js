@@ -14,6 +14,7 @@ router.get('/', function(req, res, next) {
   if(!req.query.id){//クエリのID指定が無い時は全件表示
     db.Place.findAll(
       {
+        where: {removed: false},
         order: [
           ['id', 'ASC']
         ],
@@ -38,6 +39,21 @@ router.get('/', function(req, res, next) {
   }
 });
 
+router.get('/bin', function(req, res, next) {
+  db.Place.findAll(
+    {
+      where: {removed: true},
+      order: [
+        ['id', 'ASC']
+      ],
+      include: [{
+      model: db.Event
+    }]
+    }
+  ).then(pls => {
+    res.json(pls);
+  });
+});
 
 router.get('/events', function(req, res, next) {
   db.Event.findAll(
@@ -51,7 +67,6 @@ router.get('/events', function(req, res, next) {
     res.json(eves);
   });
 });
-
 
 
 router.get('/memos', function(req, res, next) {
