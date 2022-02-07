@@ -9,21 +9,21 @@ module.exports = (sequelize, DataTypes) => {
     date: {
       type: DataTypes.DATE,
       validate: {
-        notEmpty: true,
+        //notEmpty: true,
         isDate: true
       }
     },
     PlaceId: {
       type: DataTypes.INTEGER,
       validate: {
-        notEmpty: true,
+        //notEmpty: true,
         isInt: true
       }
     },
     TourId: {
       type: DataTypes.INTEGER,
       validate: {
-        notEmpty: true,
+        //notEmpty: true,
         isInt: true
       }
     },
